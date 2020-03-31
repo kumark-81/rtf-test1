@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="453d7117-519e-4a9f-91ef-0b75896d6a7c" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="rtf-testFlow" doc:id="8c9a455d-0b6e-4901-8516-dec66b7e5396" >
+		<http:listener doc:name="Listener" doc:id="44aa06b2-d14a-4c71-817f-a4632fc902a8" config-ref="HTTP_Listener_config" path="/rtfTest"/>
+		<logger level="INFO" doc:name="Logger" doc:id="145825e7-ff53-402e-bb6e-2a8553397c8d" />
+		<ee:transform doc:name="Transform Message" doc:id="ca5aea7d-bbb2-4af2-977c-0b967d7c7edb" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message:"TEST SUCCESS"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
